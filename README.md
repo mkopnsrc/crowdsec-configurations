@@ -7,8 +7,6 @@ I'm currently utilizing this discord notification plugin with my OPNsense Firewa
 Plugin directory location: /usr/local/etc/crowdsec
 
 * Notifications directory location: /usr/local/etc/crowdsec/notifications
-* Bouncers directory location: /usr/local/etc/crowdsec/bouncers
-* Scenarios directory location: /usr/local/etc/crowdsec/scenarios
-* Parsers directory location: /usr/local/etc/crowdsec/parsers
-
-
+* Bouncers directory: /usr/local/etc/crowdsec/bouncers
+* Scenarios directory: /usr/local/etc/crowdsec/scenarios
+* Parsers directory: /usr/local/etc/crowdsec/parsers
