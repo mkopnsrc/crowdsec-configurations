@@ -1,0 +1,37 @@
+type: http
+
+name: discord
+
+log_level: info
+
+format: |
+  {
+    "content": null,
+    "embeds": [
+      {{range . -}}
+      {{$alert := . -}}
+      {{range .Decisions -}}
+      {{if $alert.Source.Cn -}}
+      {
+        "description": ":flag_{{ $alert.Source.Cn | lower }}: ({{$alert.Source.Cn | upper }}): {{$alert.Source.IP}} will get a {{.Type}} for the next {{.Duration}} for triggering '{{.Scenario}}' on {{Hostname}}. \nLinks: [CTI](https://app.crowdsec.net/cti/{{$alert.Source.IP}}) | [Shodan](https://www.shodan.io/host/{{$alert.Source.IP}})",
+        "color": "16711680"
+      }
+      {{end}}
+      {{if not $alert.Source.Cn -}}
+      {
+        "title": "{{.Scenario}}",
+        "description": ":pirate_flag: {{$alert.Source.IP}} will get a {{.Type}} for the next {{.Duration}} '{{.Scenario}}' on {{Hostname}}. \nLinks: [CTI](https://app.crowdsec.net/cti/{{$alert.Source.IP}}) | [Shodan](https://www.shodan.io/host/{{$alert.Source.IP}})",
+        "color": "16711680"
+      }
+      {{end}}
+      {{end -}}
+      {{end -}}
+    ]
+  }
+
+url: YOUR_DISCORD_WEBHOOK_URL
+
+method: POST
+
+headers:
+  Content-Type: application/json
