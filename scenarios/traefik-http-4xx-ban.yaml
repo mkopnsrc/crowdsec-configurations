@@ -1,0 +1,18 @@
+name: custom/traefik-http-4xx-ban
+description: "Detect and Ban IPs with more than 10 HTTP 400,403,404 errors from Traefik"
+filter: "evt.Meta.log_type == 'traefik' && evt.Parsed.DownstreamStatus in ['404', '403', '400']"
+groupby: "evt.Meta.source_ip"
+capacity: 10
+type: leaky
+leakspeed: "10s"
+blackhole: 5m
+duration: 4h
+labels:
+  type: exploit
+  service: http
+  behavior: "http:exploit"
+  remediation: true
+  classification: 
+    - http-forbidden-abuse
+    - attack.T1190
+    - cwe.CWE-288
